@@ -4,19 +4,45 @@
 
 서비스명 : 이옷 (이력서 옷입히기)
 
-  
-  
+## Environment:
+
+```
+win10 64bit
+python 3.7.6
+Django 2.2.2
+```
+
+
 ## Quitck start:
 
 ```python
-
-python -m venv .venv
-source .venv/Scripts/activate
 pip install -r requirements.txt
 python manage.py makemigrations
 python manage.py migrate
 python manage.py collectstatic
+```
 
+* 사이트를 사용하기 위해서는 관리자로 로그인 한 후에 `이력서 템플릿 업로드` 버튼을 통해 템플릿을 업로드 하여야 한다. 이력서 템플릿 샘플 양식 : https://drive.google.com/open?id=1xBq-Ji-HjcOYOY61SFWuUuQKj0p_mdoK
+* PDF to Image 기능을 사용하기 위해서는 다음의 작업을 해야한다.
+```
+http://blog.alivate.com.au/wp-content/uploads/2018/10/poppler-0.68.0_x86.7z
+1. 위 링크에서 압축 파일 다운 후 `C:\Program Files`에 압축 해제
+2. `C:\Program Files\poppler-0.68.0\bin`를 `환경 변수`의 `Path`에 추가
+3. 재부팅
+```
+
+
+#### Errors
+에러 메세지:
+```
+...
+import win32api, sys, os
+ImportError: DLL load failed: 지정된 프로시저를 찾을 수 없습니다.
+```
+조치 방법:
+```
+pip uninstall pypiwin32 pywin32
+pip install pywin32
 ```
 
 
@@ -41,72 +67,3 @@ docxmerge : 이력서 템플릿과 사용자 정보를 합쳐서 보여주는 Ap
 `word` : docx > xml or xml to docx 과정에서 생성되는 임시 파일들이 저장되는 장소.
 > 즉, word는 신경 쓰지 않아도 된다.
 
-
-
-## Patch note
-
-**2019.08.03 : login page style complete.** @qwlake(정우)
-
-* `result` 페이지 모달로 변경
-* `detail` 페이지 삭제
-
-***
-
-
-**2019.08.03 : login page style complete.** @paekjiyeon(지연)
-
-* `login` 로그인 페이지 스타일 변경
-
-***
-
-
-**2019.08.02 : loading page complete.** @qwlake(정우)
-
-* `resume_make` 로딩중에 gif파일 띄워주는 기능 추가
-* `resume_resule`, `resume_detail` 페이지에서 본인 외에는 접근 불가하게 보안성 강화
-
-***
-
-
-**2019.08.01 : resumelist complete.** @qwlake(정우)
-
-* `resume_result` 페이지에 좋아요순, 다운로드순 정렬 및 오름차순, 내림차순 정렬 기능 추가
-* `base.html` 디자인 변경
-* 기타 버그 수정
-
-***
-
-
-**2019.07.26 : mypage complete.** @qwlake(정우)
-
-* ``mypage``앱 완성 및 페이지(html) 완성
-* 기존의 ``accountsapp`` 삭제 후, ``django-authtools``를 이용한 ``users`` 앱 생성
-* ``result.html``과 ``detail.html``에서 ``Resume``의 다운로드 수 및 좋아요 수 보기 기능 추가
-
-***
-
-
-**2019.07.24 : coin complete.** @rbgus(규현)
-
-* ``accountsapp``의 ``user model``을 ``django.contrib.auth.models``이 아닌 커스텀 모델 구현
-* ``accountsapp``의 ``user`` 모델에 coin기능 추가
-
-***
-
-
-**2019.07.20 : detail page 0.1v complete.** @qwlake(정우)
-
-* admin 계정의 템플릿 업로드 기능 추가
-* 좋아요 기능 추가
-* media 파일 경로 암호화(AES-256)
-* docx to pdf 과정을 thread 사용으로 병렬화
-
-***
-
-
-**2019.07.10 : docx merge 0.1v complete.** @qwlake(정우)
-
-* 이력서 템플릿에 사용자 정보 merge 기능 구현
-* merge된 docx파일을 pdf로 출력 기능 구현
-
-***
