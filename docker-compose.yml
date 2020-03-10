@@ -8,6 +8,7 @@ services:
         volumes:
             - ./src:/src
             - ./config/nginx/nginx.conf:/etc/nginx/conf.d/default.conf
+            - /static:/static
         depends_on:
             - web
 
@@ -15,6 +16,7 @@ services:
         build: .
         container_name: dg01
         command: bash -c "
+            python3 manage.py collectstatic --no-input &&
             python3 manage.py makemigrations && 
             python3 manage.py migrate && 
             gunicorn project.wsgi:application -b 0:80"
@@ -22,6 +24,7 @@ services:
             - db
         volumes:
             - ./src:/src
+            - /static:/static
         expose:
             - "80"
 
