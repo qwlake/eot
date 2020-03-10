@@ -7,7 +7,7 @@ services:
             - "80:80"
         volumes:
             - ./src:/src
-            - ./config/nginx:/etc/nginx/conf.d
+            - ./config/nginx/nginx.conf:/etc/nginx/conf.d/default.conf
         depends_on:
             - web
 
@@ -17,7 +17,7 @@ services:
         command: bash -c "
             python3 manage.py makemigrations && 
             python3 manage.py migrate && 
-            gunicorn project.wsgi -b 0:80"
+            gunicorn project.wsgi:application -b 0:80"
         depends_on:
             - db
         volumes:
