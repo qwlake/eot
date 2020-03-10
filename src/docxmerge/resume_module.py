@@ -2,8 +2,6 @@ import sys, os, zipfile, base64, hashlib, subprocess, re
 from datetime import datetime, time
 from threading import Thread
 
-import comtypes.client
-from win32com.client import pythoncom
 from django.conf import settings
 from Crypto import Random
 from Crypto.Cipher import AES
@@ -45,7 +43,7 @@ class AESCipher():
         cipher = AES.new(self.key, AES.MODE_CBC, iv)
         return self._unpad(cipher.decrypt(enc[AES.block_size:])).decode('utf-8')
 
-def convert_to(folder, source, timeout=None):
+def docx_to_pdf(folder, source, timeout=None):
     args = [libreoffice_exec(), '--headless', '--convert-to', 'pdf', '--outdir', folder, source]
 
     process = subprocess.run(args, stdout=subprocess.PIPE, stderr=subprocess.PIPE, timeout=timeout)
@@ -56,21 +54,25 @@ def convert_to(folder, source, timeout=None):
     else:
         return filename.group(1)
 
+    class LibreOfficeError(Exception):
+        def __init__(self, output):
+            self.output = output
+
 def libreoffice_exec():
     if sys.platform == 'darwin':
         return '/Applications/LibreOffice.app/Contents/MacOS/soffice'
     return 'libreoffice'
 
-def docx_to_pdf(docx, pdf):
-    pythoncom.CoInitialize()
-    wdFormatPDF = 17
-    in_file = os.path.abspath(docx)
-    out_file = os.path.abspath(pdf)
-    word = comtypes.client.CreateObject('Word.Application')
-    doc = word.Documents.Open(in_file)
-    doc.SaveAs(out_file, FileFormat=wdFormatPDF)
-    doc.Close()
-    word.Quit()
+# def docx_to_pdf2(docx, pdf):
+#     pythoncom.CoInitialize()
+#     wdFormatPDF = 17
+#     in_file = os.path.abspath(docx)
+#     out_file = os.path.abspath(pdf)
+#     word = comtypes.client.CreateObject('Word.Application')
+#     doc = word.Documents.Open(in_file)
+#     doc.SaveAs(out_file, FileFormat=wdFormatPDF)
+#     doc.Close()
+#     word.Quit()
 
 # Main
 def merge(info, resume_info):
