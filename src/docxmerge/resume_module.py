@@ -43,7 +43,13 @@ class AESCipher():
         cipher = AES.new(self.key, AES.MODE_CBC, iv)
         return self._unpad(cipher.decrypt(enc[AES.block_size:])).decode('utf-8')
 
-def docx_to_pdf(folder, source, timeout=None):
+def docx_to_pdf(source, timeout=None):
+    class LibreOfficeError(Exception):
+        def __init__(self, output):
+            self.output = output
+
+    source = os.path.abspath(source)
+    folder = source[:source.rfind("/")]
     args = [libreoffice_exec(), '--headless', '--convert-to', 'pdf', '--outdir', folder, source]
 
     process = subprocess.run(args, stdout=subprocess.PIPE, stderr=subprocess.PIPE, timeout=timeout)
@@ -54,25 +60,10 @@ def docx_to_pdf(folder, source, timeout=None):
     else:
         return filename.group(1)
 
-    class LibreOfficeError(Exception):
-        def __init__(self, output):
-            self.output = output
-
 def libreoffice_exec():
     if sys.platform == 'darwin':
         return '/Applications/LibreOffice.app/Contents/MacOS/soffice'
     return 'libreoffice'
-
-# def docx_to_pdf2(docx, pdf):
-#     pythoncom.CoInitialize()
-#     wdFormatPDF = 17
-#     in_file = os.path.abspath(docx)
-#     out_file = os.path.abspath(pdf)
-#     word = comtypes.client.CreateObject('Word.Application')
-#     doc = word.Documents.Open(in_file)
-#     doc.SaveAs(out_file, FileFormat=wdFormatPDF)
-#     doc.Close()
-#     word.Quit()
 
 # Main
 def merge(info, resume_info):
@@ -85,9 +76,9 @@ def merge(info, resume_info):
         # 작업 실행 시간
         create_time = datetime.today().strftime("%Y%m%d%H%M%S")
 
-        enc = aes.encrypt(resume_info.user.username + '-' + create_time)
-        enc = enc.replace('/', 'SLASH')
-        user_path = 'media/resume_users/' + enc
+        user_enc = aes.encrypt(resume_info.user.username + '-' + create_time)
+        user_enc = user_enc.replace('/', '_')
+        user_path = 'media/resume_users/' + user_enc
 
         # User 폴더가 없으면(신규 유저이면) User의 폴더 생성
         if not os.path.isdir('media/resume_users/'):
@@ -118,21 +109,23 @@ def merge(info, resume_info):
         for template_name, template_url, resume_merged in zip(template_name_list, template_url_list, resume_merged_list):
 
             # 생성될 파일 경로 및 이름
-            # 'media/resume_users/{user_path}/{resume_info.user}-{template_name}'
-            new_name = user_path + "/" + resume_info.user.username + "-" + template_name
-            pdf_name = user_path + "/" + resume_info.user.username + "-" + template_name[:template_name.rfind(".")] + '.pdf'
-            img_name = user_path + "/" + resume_info.user.username + "-" + template_name[:template_name.rfind(".")] + '.jpg'
+            # user_path = media/resume_users/{user_enc}
+            # new_name = {resume_info.user}-{template_name}
+            new_name = f"{resume_info.user.username}-{template_name}"
+            pdf_name = f"{resume_info.user.username}-{template_name[:template_name.rfind('.')]}.pdf"
+            img_name = f"{resume_info.user.username}-{template_name[:template_name.rfind('.')]}.png"
             new_name_list.append(new_name)
             pdf_name_list.append(pdf_name)
             img_name_list.append(img_name)
 
-            resume_merged.docx_file = new_name[new_name.find('/')+1:]
-            resume_merged.pdf_file = pdf_name[pdf_name.find('/')+1:]
-            resume_merged.img_file = img_name[img_name.find('/')+1:]
+            user_path_without_media = user_path[user_path.find('/')+1:]
+            resume_merged.docx_file = f"{user_path_without_media}/{new_name}"
+            resume_merged.pdf_file = f"{user_path_without_media}/{pdf_name}"
+            resume_merged.img_file = f"{user_path_without_media}/{img_name}"
             resume_merged.save()
 
             # 병합될 파일
-            new_docx = zipfile.ZipFile(new_name, 'a')
+            new_docx = zipfile.ZipFile(f"{user_path}/{new_name}", 'a')
 
             # docx 파일 템플릿
             template_docx = zipfile.ZipFile(template_url)
@@ -161,8 +154,8 @@ def merge(info, resume_info):
         # convert docx to pdf with thread
         starttime = datetime.now()
         threads = []
-        for new_name, pdf_name in zip(new_name_list, pdf_name_list):
-            t = Thread(target=docx_to_pdf, args=(new_name, pdf_name))
+        for new_name in new_name_list:
+            t = Thread(target=docx_to_pdf, args=(f"{user_path}/{new_name}",))
             threads.append(t)
         for t in threads:
             t.start()
@@ -172,9 +165,11 @@ def merge(info, resume_info):
 
         # convert pdf to image
         for pdf_name, img_name in zip(pdf_name_list, img_name_list):
-            pages = convert_from_path(pdf_name, 500)
+            pdf_name = os.path.abspath(f"{user_path}/{pdf_name}")
+            img_name = os.path.abspath(f"{user_path}/{img_name}")
+            pages = convert_from_path(pdf_name, 300)
             for page in pages:
-                page.save(img_name, 'JPEG')
+                page.save(img_name, 'PNG')
 
         ## convert docx to pdf with non-thread
         # starttime = datetime.now()

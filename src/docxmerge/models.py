@@ -71,9 +71,10 @@ class ResumeMerged(models.Model):
     user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
     resume = models.ForeignKey('Resume', on_delete=models.CASCADE)
     resume_info = models.ForeignKey('ResumeInfo', on_delete=models.CASCADE)
-    docx_file = models.FileField(null=True)
-    pdf_file = models.FileField(null=True)
-    img_file = models.ImageField(null=True)
+    docx_file = models.CharField(default='', max_length=200)
+    pdf_file = models.CharField(default='', max_length=200)
+    img_file = models.CharField(default='', max_length=200)
+    # img_file = models.ImageField(null=True)
 
     def __str__(self):
         return ("{} - {}").format(self.user.username, self.resume.resume_name)
