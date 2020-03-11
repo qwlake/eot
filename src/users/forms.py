@@ -7,7 +7,6 @@ from .models import User
 
 # account/login.html
 class MyCustomLoginForm(LoginForm):
-    print('[GET] : Account Login 커스텀 폼 실행되었음')
     def __init__(self, *args, **kwargs):
         super(MyCustomLoginForm, self).__init__(*args, **kwargs)
         self.fields['login'].widget = forms.TextInput(attrs={'type': 'email', 'class': 'input-login','placeholder':'Email Adreess'})
@@ -17,21 +16,16 @@ class MyCustomLoginForm(LoginForm):
         self.fields['password'].label = ''
         
         self.fields['remember'].label = "이메일 저장"
-        print(self.fields['remember'])
         
     def login(self, *args, **kwargs):
         # custom override
-        
-        print('[POST] : Account Login 커스텀 폼 실행되었음')
         return super(MyCustomLoginForm,self).login(*args, **kwargs)
 
 
 # account/signup.html
 class MyCustomSignupForm(AccountSignup):
-    print('[GET] : Account Signup 커스텀 폼 실행되었음')
     def __init__(self, *args, **kwargs):
         super(MyCustomSignupForm, self).__init__(*args, **kwargs)
-        print(self.fields)
         self.fields['email'].widget = forms.TextInput(attrs={'class': 'input-signup','placeholder':'Email Adreess'})
         self.fields['email'].label = ''
 
@@ -45,7 +39,6 @@ class MyCustomSignupForm(AccountSignup):
         self.fields['password2'].label = ''
 
     def save(self, request):
-        print('[POST] : Account Signup 커스텀 폼 실행되었음')
         # Ensure you call the parent class's save.
         # .save() returns a User object.
         
@@ -61,12 +54,8 @@ class MyCustomSocialSignupForm(SocialSignup):
     def __init__(self, *args, **kwargs):
         super(MyCustomSocialSignupForm, self).__init__(*args, **kwargs)
         # self.fields['email'].widget = forms.TextInput(attrs={'class': 'input-socialsignup','placeholder':'Email Adreess', 'readonly':'readonly'})
-        
-        print(self.fields)
-        print('[GET] : SocialAccount Signup 커스텀 폼 실행되었음')
 
     def save(self):    
-        print('[POST] : SocialAccount Signup 커스텀 폼 실행되었음')
         # Ensure you call the parent class's save.
         # .save() returns a User object.
         user = super(MyCustomSocialSignupForm, self).save()

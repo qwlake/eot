@@ -7,7 +7,6 @@ class ResumeInfoForm(forms.ModelForm):
         fields = '__all__'
     def __init__(self, *args, **kwargs):
         super(ResumeInfoForm, self).__init__(*args, **kwargs)
-        print(self.fields['info_name'])
         self.fields['info_name'].widget.attrs.update({
             'class': 'infoSection',
             'placeholder': '이력서에 대한 설명',
