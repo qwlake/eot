@@ -3,6 +3,8 @@
 멋쟁이 사자처럼 7기 중앙 해커톤
 
 서비스명 : 이옷 (이력서 옷입히기)
+<br>
+![index1](./READMEMD-img/eot-index.jpg)
 
 ## Environment:
 
