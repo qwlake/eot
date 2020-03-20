@@ -51,9 +51,6 @@ INSTALLED_APPS = [
 
     # provider 구글 페이스북 ..소셜로그인 제공업체
     'allauth.socialaccount.providers.google',
-
-    # # poppler pdf file renderer
-    # 'poppler'
 ]
 
 MIDDLEWARE = [
@@ -167,7 +164,7 @@ AUTHENTICATION_BACKENDS = (
     'allauth.account.auth_backends.AuthenticationBackend',
 )
 
-SITE_ID = 1
+SITE_ID = 2
 
 # 추가설정 for allauth 
 ACCOUNT_AUTHENTICATION_METHOD = 'email' # email기반 account
