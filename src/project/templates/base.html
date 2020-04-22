@@ -47,38 +47,41 @@
         <body>
         
         
-        <nav class="navbar navbar-expand-lg bg-secondary text-uppercase fixed-top" id="mainNav" style="background-color: rgba(44,62,80,0.8) !important; height: 80px;">
+        <nav class="navbar navbar-expand-lg bg-secondary text-uppercase fixed-top" id="mainNav">
             <div class="container">
-                <a class="navbar-brand js-scroll-trigger" href="{% url 'index' %}"><img src="{% static 'base/lee.png' %}" alt="이옷" width='73px' height='52px'></a>
-                <button class="navbar-toggler navbar-toggler-right text-uppercase font-weight-bold bg-primary text-white rounded" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
+                <a class="js-scroll-trigger" href="{% url 'index' %}"><img src="{% static 'base/eot-logo.png' %}" width="60px" height="47px" id="eot-logo" alt="이옷"></a>
+                <button class="ml-auto navbar-toggler text-uppercase font-weight-bold bg-primary text-white rounded" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
                 Menu
                 <i class="fas fa-bars"></i>
                 </button>
                 <div class="collapse navbar-collapse" id="navbarResponsive">
-                <ul class="navbar-nav ml-auto">
+                <ul class="navbar-nav flex-fill">
+                    <div class="navbar-nav ml-auto">
                     {% if user.is_authenticated %}
-                        <li class="nav-item mx-0 mx-lg-1">
+                        <li class="nav-item">
                         <a class="nav-link py-3 px-0 px-lg-3 rounded js-scroll-trigger" href="{% url 'users:mypage' %}">My page</a>
                         </li>
-                        <li class="nav-item mx-0 mx-lg-1">
+                        <li class="nav-item">
                         <a class="nav-link py-3 px-0 px-lg-3 rounded js-scroll-trigger" href="{% url 'account_logout' %}">Log out</a>
                         </li>
-                        <li class="nav-item mx-0 mx-lg-1">
-                        <a class="nav-link py-3 px-0 px-lg-3 rounded js-scroll-trigger" href="{% url 'admin_page' %}">Admin page</a>
-                        </li>
                     {% else %}
-                        <li class="nav-item mx-0 mx-lg-1">
+                        <li class="nav-item">
                         <a class="nav-link py-3 px-0 px-lg-3 rounded js-scroll-trigger" href="{% url 'account_signup' %}">Sign up</a>
                         </li>
-                        <li class="nav-item mx-0 mx-lg-1">
-                        
+                        <li class="nav-item">
                         <a class="nav-link py-3 px-0 px-lg-3 rounded js-scroll-trigger" href="{% url 'account_login' %}">Log in</a>
                         </li>
                     {% endif %}
+                    {% if user.is_superuser %}
+                        <li class="nav-item">
+                        <a class="nav-link py-3 px-0 px-lg-3 rounded js-scroll-trigger" href="{% url 'admin_page' %}">Admin page</a>
+                        </li>
+                    {% endif %}
+                    </div>
                 </ul>
                 </div>
             </div>
-            </nav>
+        </nav>
 
         
         
