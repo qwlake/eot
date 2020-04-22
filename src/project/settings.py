@@ -10,7 +10,17 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/2.2/ref/settings/
 """
 
-import os
+import os, json
+from django.core.exceptions import ImproperlyConfigured
+
+def get_secret(setting):
+    with open('secret.json', 'r') as f:
+        secret = json.loads(f.read())
+    try:
+        return secret[setting]
+    except:
+        error_msg = "Set key '{0}' in secret.json".format(setting)
+        raise ImproperlyConfigured(error_msg)
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
@@ -20,7 +30,7 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 # See https://docs.djangoproject.com/en/2.2/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'xj6t04ym2$r5^z6xm41p0tnf%2j(lw%m2%b*%y(4*-_z%*kcup'
+SECRET_KEY = get_secret('DJANGO_SECRET_KEY')
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = False
@@ -51,9 +61,6 @@ INSTALLED_APPS = [
 
     # provider 구글 페이스북 ..소셜로그인 제공업체
     'allauth.socialaccount.providers.google',
-
-    # # poppler pdf file renderer
-    # 'poppler'
 ]
 
 MIDDLEWARE = [
@@ -167,7 +174,7 @@ AUTHENTICATION_BACKENDS = (
     'allauth.account.auth_backends.AuthenticationBackend',
 )
 
-SITE_ID = 1
+SITE_ID = 2
 
 # 추가설정 for allauth 
 ACCOUNT_AUTHENTICATION_METHOD = 'email' # email기반 account
