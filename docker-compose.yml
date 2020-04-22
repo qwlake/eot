@@ -19,14 +19,14 @@ services:
             python3 manage.py collectstatic --no-input &&
             python3 manage.py makemigrations && 
             python3 manage.py migrate && 
-            gunicorn project.wsgi:application -b 0:80"
+            gunicorn project.wsgi:application -b 0:8000"
         depends_on:
             - db
         volumes:
             - ./src:/src
             - /static:/static
         expose:
-            - "80"
+            - "8000"
 
     db:
         image: postgres:latest
