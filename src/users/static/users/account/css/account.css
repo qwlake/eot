@@ -12,7 +12,7 @@ body{
     margin-top: 80px;
 }
 
-.signup-box{
+.account-form-box{
     /* background-color:  #53BFAC; */
     height: 600px;
     width: 500px;
@@ -24,20 +24,18 @@ body{
     /* left: 30%; */
 }
 
-.input-signup{
+.account-input{
     height: 50px;
     width: 440px;  
     font-family: 'Noto Sans KR';
 
-    border-top: 0px;
-    border-left: 0px;
-    border-right: 0px;
-    border-bottom: 2px solid black;
-    border-radius: 5px;
-    margin-bottom: 13px;
+    font-size: 10pt;
+    color: #2b303b;
     padding-left: 15px;
+    -webkit-border-radius: 5px;
+    -moz-border-radius: 5px;
+    border-radius: 5px;
 }
-
 
 .btn-light{
     /* background-color: #FBF9F4; */
@@ -58,12 +56,12 @@ body{
 
 }
 
-#signup-page{
+.account-title {
     margin-bottom: 100px;
     text-align: center;
     display: block;
     padding-bottom: 20px;
-    width: 0px;
+    width: 200px;
     border-bottom: 2px solid #53BFAC;
     font-family: 'Noto Sans KR';
     font-size: 40px;
@@ -72,7 +70,7 @@ body{
     /* margin-left: 15%; */
 }
 
-.signupTitleClass {
+.title-trans {
     /* margin-bottom: 80px !important; */
     /* padding-bottom: 15px !important; */
     /* padding-left: 100px !important; */
@@ -87,23 +85,11 @@ body{
     color:#53BFAC;
 }
 
-.feature-signup{
-    padding-right: 50px;
-    
-}
-
-h1{
-    margin-left: 15%;
-}
-
-th,td{
-    padding: 10px;
-}
-
-#login-go{
+.link{
     color:#53BFAC;
 }
 
-#login-go:hover{
+.link:hover{
     color:#058452;
+    text-decoration: none;
 }

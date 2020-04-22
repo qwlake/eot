@@ -6,35 +6,31 @@
 <head>
     <meta charset="UTF-8">
     <title>이옷 | Sign up</title>
+    <link rel='stylesheet' type='text/css'  href="{% static 'users/account/css/account.css' %}">
     <script>
-        $(document).ready(function(){
-            $('#signup-page').addClass('signupTitleClass');
-        })
-    </script>    
+      $(document).ready(function(){
+          $('.account-title').addClass('title-trans');
+      })
+  </script>
 </head>
 <body>
-  
-    <link rel='stylesheet' type='text/css'  href="{% static 'users/account/css/signup.css' %}?ver=1">
-
-    <a id="signup-page" href="{{ account_signup }}"><strong>회원가입</strong><a>
+  <strong class="account-title">회원가입</strong>
     <center>
-      <div class ="signup-box">
-        <form class="signup" id="signup_form" method="post" action="{% url 'account_signup' %}">
-          {% csrf_token %}
-          {{ form.as_p }}
-          {% if redirect_field_value %}
-          <input type="hidden" name="{{ redirect_field_name }}" value="{{ redirect_field_value }}" />
-          {% endif %}
-          <br>
-          <button class="btn btn-light" type="submit">확인</button>
-
-        </form>
-
-    <br>
-    <hr class="line">
-        <h6>이미 계정이 있으십니까? <a id="login-go" href="{{ login_url }}">로그인</a></h6>
-      </div>
-      </center>
+        <div class ="account-form-box">
+            <form method="post" action="{% url 'account_signup' %}">
+                {% csrf_token %}
+                {{ form.as_p }}
+                {% if redirect_field_value %}
+                <input type="hidden" name="{{ redirect_field_name }}" value="{{ redirect_field_value }}" />
+                {% endif %}
+                <br>
+                <button class="btn btn-light" type="submit">확인</button>
+            </form>
+            <br>
+            <hr class="line">
+            <h6>이미 계정 있다면? <a class="link" href="{{ login_url }}">로그인</a></h6>
+        </div>
+    </center>
 <body>
 </html>
 
