@@ -2,9 +2,12 @@
 # Edit at https://www.gitignore.io/?templates=django,python,pycharm+all,visualstudiocode
 
 ### custome files ###
+secret.json
+
 */resume_users/
 word/
 .static_root/
+
 **/migrations/**
 !__init__.py
 
