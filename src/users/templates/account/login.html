@@ -11,40 +11,25 @@
 <head>
     <meta charset="UTF-8">
     <title>이옷 | Login</title>
-    <link rel='stylesheet' type='text/css' href="{% static 'users/account/css/account.css' %}">
     <script>
         $(document).ready(function(){
-            $('.account-title').addClass('title-trans');
+            $('.page-title').addClass('title-trans');
         })
     </script>
 </head>
 <body>
-    <strong class="account-title">로그인</strong>
+    <strong class="page-title">로그인</strong>
     <center>
-        <div class ="account-form-box">
+        <div class ="input-form-box">
             <form method="POST" action="{% url 'account_login' %}">
                 {% csrf_token %}
                 {{ form.as_p }}
-                    <!-- <table>
-                        <tr>
-                            <td>
-                                <input class="input-login" name="login" type="email" placeholder="Email address" >
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>
-                                <input class="input-login" name="password" type="password" placeholder="Password">
-                            </td>
-                        </tr>
-                    <br><br>
-                    
-                    </table> -->
-                    {% if redirect_field_value %}
-                    <input type="hidden" name="{{ redirect_field_name }}" value="{{ redirect_field_value }}" />
-                    {% endif %}
-                    <br>
-                    <button  class="btn btn-light"  type="submit">로그인</button>
-                </form>
+                {% if redirect_field_value %}
+                <input type="hidden" name="{{ redirect_field_name }}" value="{{ redirect_field_value }}" />
+                {% endif %}
+                <br>
+                <button class="btn btn-light-custom"  type="submit">로그인</button>
+            </form>
             <br>
             <hr class="line">
             <p class ="go-signup">

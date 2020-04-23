@@ -6,7 +6,7 @@
 <head>
     <meta charset="UTF-8">
     <title>My Page</title>
-    <link rel="stylesheet" href="{% static 'users/myPageStyle.css' %}">
+    <link rel="stylesheet" href="{% static 'users/mypage.css' %}">
 </head>
 <body>
     <div class="container">
@@ -26,7 +26,7 @@
                 </div>
             {% endfor %}
             <div class="flex-item">
-                <a href="{% url 'docxmerge:make' %}" class="btn btn-secondary writeBtn"><i class="fas fa-plus"></i> 이력서 작성</a>
+                <a href="{% url 'docxmerge:make' %}" class="btn btn-secondary btn-write"><i class="fas fa-plus"></i> 이력서 작성</a>
             </div>
         </div>
     </div>

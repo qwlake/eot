@@ -12,7 +12,7 @@ body{
     margin-top: 80px;
 }
 
-.account-form-box{
+.input-form-box{
     /* background-color:  #53BFAC; */
     height: 600px;
     width: 500px;
@@ -24,31 +24,36 @@ body{
     /* left: 30%; */
 }
 
-.account-input{
+.input-single{
     height: 50px;
     width: 440px;  
     font-family: 'Noto Sans KR';
-
     font-size: 10pt;
-    color: #2b303b;
     padding-left: 15px;
-    -webkit-border-radius: 5px;
-    -moz-border-radius: 5px;
+
+    /* color: #2b303b;
     border-radius: 5px;
+    border: 2px;
+    -webkit-border-radius: 5px;
+    -moz-border-radius: 5px; */
+
+    border: 1px solid #2b303b; border-radius: 0; 
+    -webkit-appearance: none; 
+    -moz-appearance: none;
 }
 
-.btn-light{
+.btn-light-custom{
     /* background-color: #FBF9F4; */
     background-color:#53BFAC;
     color: white;
     height: 62px;
-    width: 100%;
+    width: 250px;
     font-family: 'Noto Sans KR';    
     border:none;    
     /* margin-left: 70%; */
 }
 
-.btn-light:hover{
+.btn-light-custom:hover{
     /* background-color:#53BFAC;
     color: white; */
     background-color: #53BFAC;
@@ -56,7 +61,7 @@ body{
 
 }
 
-.account-title {
+.page-title {
     margin-bottom: 100px;
     text-align: center;
     display: block;

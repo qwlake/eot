@@ -6,17 +6,16 @@
 <head>
     <meta charset="UTF-8">
     <title>이옷 | Sign up</title>
-    <link rel='stylesheet' type='text/css'  href="{% static 'users/account/css/account.css' %}">
     <script>
       $(document).ready(function(){
-          $('.account-title').addClass('title-trans');
+          $('.page-title').addClass('title-trans');
       })
   </script>
 </head>
 <body>
-  <strong class="account-title">회원가입</strong>
+  <strong class="page-title">회원가입</strong>
     <center>
-        <div class ="account-form-box">
+        <div class ="input-form-box">
             <form method="post" action="{% url 'account_signup' %}">
                 {% csrf_token %}
                 {{ form.as_p }}
@@ -24,7 +23,7 @@
                 <input type="hidden" name="{{ redirect_field_name }}" value="{{ redirect_field_value }}" />
                 {% endif %}
                 <br>
-                <button class="btn btn-light" type="submit">확인</button>
+                <button class="btn btn-light-custom" type="submit">확인</button>
             </form>
             <br>
             <hr class="line">
