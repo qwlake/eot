@@ -11,38 +11,37 @@ from pdf2image import convert_from_path
 from .models import Resume, ResumeMerged
 from . import resume_config
 
-class AESCipher():
-    
-    def __init__(self):
-        key = resume_config.SECRET_KEY[:32] # AES-256
-        self.bs = 32
-        self.key = hashlib.sha256(AESCipher.str_to_bytes(key)).digest()
+def upload_preprocessing(test):
+    # # 병합될 파일
+    # new_docx = zipfile.ZipFile(test, 'a')
 
-    @staticmethod
-    def str_to_bytes(data):
-        u_type = type(b''.decode('utf8'))
-        if isinstance(data, u_type):
-            return data.encode('utf8')
-        return data
+    # # docx 파일 템플릿
+    # template_docx = zipfile.ZipFile(test)
 
-    def _pad(self, s):
-        return s + (self.bs - len(s) % self.bs) * AESCipher.str_to_bytes(chr(self.bs - len(s) % self.bs))
+    # # 템플릿 파일을 xml 포맷으로 압축 해제
+    # with open(template_docx.extract("word/document.xml"), encoding='UTF8') as temp_xml_file:
+    #     temp_xml_str = temp_xml_file.read()
 
-    @staticmethod
-    def _unpad(s):
-        return s[:-ord(s[len(s)-1:])]
+    # # # 템플릿의 변수들을 user의 정보로 교체
+    # # for key in replace_text.keys():
+    # #     temp_xml_str = temp_xml_str.replace(str(key), str(replace_text.get(key)))
 
-    def encrypt(self, raw):
-        raw = self._pad(AESCipher.str_to_bytes(raw))
-        iv = Random.new().read(AES.block_size)
-        cipher = AES.new(self.key, AES.MODE_CBC, iv)
-        return base64.b64encode(iv + cipher.encrypt(raw)).decode('utf-8')
+    # re.replace()
 
-    def decrypt(self, enc):
-        enc = base64.b64decode(enc)
-        iv = enc[:AES.block_size]
-        cipher = AES.new(self.key, AES.MODE_CBC, iv)
-        return self._unpad(cipher.decrypt(enc[AES.block_size:])).decode('utf-8')
+    # # 병합된 정보를 xml 파일로 임시 저장
+    # with open("word/temp.xml", "w+", encoding='UTF8') as temp_xml_file:
+    #     temp_xml_file.write(temp_xml_str)
+
+    # # 임시저장된 병합정보를 파일에 쓰기
+    # for f in template_docx.filelist:
+    #     if not f.filename == "word/document.xml":
+    #         new_docx.writestr(f.filename, template_docx.read(f))
+    # new_docx.write("word/temp.xml", "word/document.xml")
+    # template_docx.close()
+    # new_docx.close()
+
+
+    return test
 
 def docx_to_pdf(source, timeout=None):
     class _LibreOfficeError(Exception):
@@ -71,8 +70,40 @@ def pdf_to_img(z):
     for page in pages:
         page.save(img_path_name, 'PNG')
 
-# Main
 def merge(info, resume_info):
+
+    class AESCipher():
+    
+        def __init__(self):
+            key = resume_config.SECRET_KEY[:32] # AES-256
+            self.bs = 32
+            self.key = hashlib.sha256(AESCipher.str_to_bytes(key)).digest()
+
+        @staticmethod
+        def str_to_bytes(data):
+            u_type = type(b''.decode('utf8'))
+            if isinstance(data, u_type):
+                return data.encode('utf8')
+            return data
+
+        def _pad(self, s):
+            return s + (self.bs - len(s) % self.bs) * AESCipher.str_to_bytes(chr(self.bs - len(s) % self.bs))
+
+        @staticmethod
+        def _unpad(s):
+            return s[:-ord(s[len(s)-1:])]
+
+        def encrypt(self, raw):
+            raw = self._pad(AESCipher.str_to_bytes(raw))
+            iv = Random.new().read(AES.block_size)
+            cipher = AES.new(self.key, AES.MODE_CBC, iv)
+            return base64.b64encode(iv + cipher.encrypt(raw)).decode('utf-8')
+
+        def decrypt(self, enc):
+            enc = base64.b64decode(enc)
+            iv = enc[:AES.block_size]
+            cipher = AES.new(self.key, AES.MODE_CBC, iv)
+            return self._unpad(cipher.decrypt(enc[AES.block_size:])).decode('utf-8')
 
     aes = AESCipher()
     date = datetime.now().strftime("%Y. %m. %d.")
@@ -130,6 +161,8 @@ def merge(info, resume_info):
             resume_merged.img_file = f"{user_path_without_media}/{img_name}"
             resume_merged.save()
 
+            starttime = datetime.now()
+
             # 병합될 파일
             new_docx = zipfile.ZipFile(f"{user_path}/{new_name}", 'a')
 
@@ -142,19 +175,21 @@ def merge(info, resume_info):
 
             # 템플릿의 변수들을 user의 정보로 교체
             for key in replace_text.keys():
-                temp_xml_str = temp_xml_str.replace(str(key), str(replace_text.get(key)))
+                # temp_xml_str = temp_xml_str.replace(str(key), str(replace_text.get(key)))
+                temp_xml_str = re.sub(str(key), str(replace_text.get(key)), temp_xml_str, 1)
 
             # 병합된 정보를 xml 파일로 임시 저장
             with open("word/temp.xml", "w+", encoding='UTF8') as temp_xml_file:
                 temp_xml_file.write(temp_xml_str)
 
             # 임시저장된 병합정보를 파일에 쓰기
-            for file in template_docx.filelist:
-                if not file.filename == "word/document.xml":
-                    new_docx.writestr(file.filename, template_docx.read(file))
+            for f in template_docx.filelist:
+                if not f.filename == "word/document.xml":
+                    new_docx.writestr(f.filename, template_docx.read(f))
             new_docx.write("word/temp.xml", "word/document.xml")
             template_docx.close()
             new_docx.close()
+        print("Merge complete", datetime.now() - starttime)
         print("-----------------------------Merge complete------------------------------------")
 
         # # convert docx to pdf with thread
