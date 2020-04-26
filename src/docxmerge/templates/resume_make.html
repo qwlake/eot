@@ -11,7 +11,7 @@
     <script type="text/javascript">
         var frm = $('#submit-form');
         $(document).on('click', '#submit-btn', function() {
-            $('.resumeDiv').hide();
+            $('.resume-div').hide();
             $('.loading').show();
             $.ajax({
                 type: frm.attr('method'),
@@ -36,17 +36,19 @@
     </script>
 </head>
 <body>
-    <strong class="page-title">정보입력</strong>
-    <form id="submit-form" method="POST" action="{% url 'docxmerge:make' %}">
-        <table id="form-table">
-            {% csrf_token %}
-            {{ form.as_p }}
-            <br>
-        </table>
-        <button class="btn btn-light-custom" type="submit">제출</button>
-    </form>
-    <br>
-    <hr class="line">
+    <div class="resume-div">
+        <strong class="page-title">정보입력</strong>
+        <form id="submit-form" method="POST" action="{% url 'docxmerge:make' %}">
+            <table id="form-table">
+                {% csrf_token %}
+                {{ form.as_p }}
+                <br>
+            </table>
+            <button class="btn btn-light-custom" id="submit-btn" type="submit">제출</button>
+        </form>
+        <br>
+        <hr class="line">
+    </div>
     <div class="container loading"></div>
 </body>
 </html>
