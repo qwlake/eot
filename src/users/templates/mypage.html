@@ -6,29 +6,30 @@
 <head>
     <meta charset="UTF-8">
     <title>My Page</title>
-    <link rel="stylesheet" href="{% static 'users/myPageStyle.css' %}">
+    <link rel="stylesheet" href="{% static 'users/mypage.css' %}">
 </head>
 <body>
-<div class="container">
-    <h2>My Page</h2>
-    <br>
-    <div>
-        <span>내 코인 : {{ user.usercoin }}</span>
-        <button type="button" class="btn btn-light" onclick="location.href='{% url 'users:coin_add' 1000 %}'">1000코인 충전</button>
-    </div>
-    <br>
-        <div class="outDiv">
-            {% for resume_info in resume_info_list %}
+    <div class="container">
+        <h2>My Page</h2>
+        <br>
+        <div>
+            <span>내 코인 : {{ user.usercoin }}</span>
+            <button type="button" class="btn btn-light" onclick="location.href='{% url 'users:coin_add' 1000 %}'">1000코인 충전</button>
+        </div>
+        <br>
+        <div class="out-div">
+            <div class="flex-item">
+                <a href="{% url 'docxmerge:make' %}" class="btn btn-secondary btn-write"><i class="fas fa-plus"></i> 이력서 작성</a>
+            </div>
+            {% for resume_info in resume_info_list reversed %}
                 <div class="flex-item">
-                    <h5>{{ resume_info.info_name }}</h5>
+                    <h5>{{ resume_info.info_name|truncatechars:13 }}</h5>
                     <p>{{ resume_info.date }} 작성</p>
                     <a href="{% url 'docxmerge:result' resume_info.pk %}" class="btn btn-primary">이력서 보기</a>
                 </div>
             {% endfor %}
         </div>
-        <a href="{% url 'docxmerge:make' %}" class="writeBtn">이력서 작성</a>
-
-</div>
+    </div>
 </body>
 </html>
 {% endblock %}

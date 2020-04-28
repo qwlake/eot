@@ -1,0 +1,100 @@
+@import url(//fonts.googleapis.com/earlyaccess/notosanskr.css); .notosanskr * { font-family: 'Noto Sans KR', sans-serif; }
+
+
+html{
+    height: 100%;
+    margin: 0;
+    /* background-image: url('../images/signup-background.png'); */
+    /* background: linear-gradient(90deg, #53BFAC 50%, white 50%); */
+}
+
+body{
+    margin-top: 80px;
+}
+
+.input-form-box{
+    /* background-color:  #53BFAC; */
+    height: 600px;
+    width: 500px;
+    border: none;
+    border-radius: 10px;
+    padding: 20px; 
+    font-family: 'Noto Sans KR';
+    position: relative;
+    /* left: 30%; */
+}
+
+.input-single{
+    height: 50px;
+    width: 440px;  
+    font-family: 'Noto Sans KR';
+    font-size: 10pt;
+    padding-left: 15px;
+
+    /* color: #2b303b;
+    border-radius: 5px;
+    border: 2px;
+    -webkit-border-radius: 5px;
+    -moz-border-radius: 5px; */
+
+    border: 1px solid #2b303b; border-radius: 0; 
+    -webkit-appearance: none; 
+    -moz-appearance: none;
+}
+
+.btn-light-custom{
+    /* background-color: #FBF9F4; */
+    background-color:#53BFAC;
+    color: white;
+    height: 62px;
+    width: 250px;
+    font-family: 'Noto Sans KR';    
+    border:none;    
+    /* margin-left: 70%; */
+}
+
+.btn-light-custom:hover{
+    /* background-color:#53BFAC;
+    color: white; */
+    background-color: #53BFAC;
+    color: black;
+
+}
+
+.page-title {
+    margin-bottom: 100px;
+    text-align: center;
+    display: block;
+    padding-bottom: 20px;
+    width: 200px;
+    border-bottom: 2px solid #53BFAC;
+    font-family: 'Noto Sans KR';
+    font-size: 40px;
+    color: black;
+    text-decoration: none;
+    /* margin-left: 15%; */
+}
+
+.title-trans {
+    /* margin-bottom: 80px !important; */
+    /* padding-bottom: 15px !important; */
+    /* padding-left: 100px !important; */
+    width: 100% !important;
+    border-bottom: 2px solid #53BFAC;   
+    transition: all 1s;
+    font-size: 40px !important;
+}
+
+.line{
+    border:thin solid;
+    color:#53BFAC;
+}
+
+.link{
+    color:#53BFAC;
+}
+
+.link:hover{
+    color:#058452;
+    text-decoration: none;
+}
