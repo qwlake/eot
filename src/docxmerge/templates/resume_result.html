@@ -47,15 +47,14 @@
   {% comment %} <header class="masthead bg-primary text-white text-center"> {% endcomment %}
   <section class="page-section portfolio" id="portfolio">
     <div class="container">
-      <br><br>
       <center>
         <!-- Portfolio Section Heading -->
         <img class="page-section-heading text-center text-uppercase text-secondary mb-0"><span class="resultTitle">[
           옷입은 이력서 ] </h2>
 
-          <p class="resultNotice"> 마음에 드는 이력서를 선택해 보세요 </p>
+          <p class="result-notice"> 마음에 드는 이력서를 선택해 보세요 </p>
           <div class="input-group mb-3" id="sort-select">
-            <select class="custom-select" id="inputGroupSelect01" onchange="location = this.value;">
+            <select class="custom-select" onchange="location = this.value;">
               {% if order_by == 'download_num' %}
               <option value="{% url 'docxmerge:result' resume_info.pk 'download_num' order %}" selected>다운로드순</option>
               <option value="{% url 'docxmerge:result' resume_info.pk 'like_num' order %}">좋아요순</option>
