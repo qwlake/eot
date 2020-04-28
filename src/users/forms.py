@@ -9,10 +9,10 @@ from .models import User
 class MyCustomLoginForm(LoginForm):
     def __init__(self, *args, **kwargs):
         super(MyCustomLoginForm, self).__init__(*args, **kwargs)
-        self.fields['login'].widget = forms.TextInput(attrs={'type': 'email', 'class': 'input-login','placeholder':'Email Adreess'})
+        self.fields['login'].widget = forms.TextInput(attrs={'type': 'email', 'class': 'input-single','placeholder':'Email Adreess'})
         self.fields['login'].label = ''
         
-        self.fields['password'].widget = forms.PasswordInput(attrs={'class': 'input-login', 'placeholder':'Password'})
+        self.fields['password'].widget = forms.PasswordInput(attrs={'class': 'input-single', 'placeholder':'Password'})
         self.fields['password'].label = ''
         
         self.fields['remember'].label = "이메일 저장"
@@ -26,16 +26,16 @@ class MyCustomLoginForm(LoginForm):
 class MyCustomSignupForm(AccountSignup):
     def __init__(self, *args, **kwargs):
         super(MyCustomSignupForm, self).__init__(*args, **kwargs)
-        self.fields['email'].widget = forms.TextInput(attrs={'class': 'input-signup','placeholder':'Email Adreess'})
+        self.fields['email'].widget = forms.TextInput(attrs={'class': 'input-single','placeholder':'Email Adreess'})
         self.fields['email'].label = ''
 
-        self.fields['username'].widget = forms.TextInput(attrs={'class': 'input-signup','placeholder':'username'})
+        self.fields['username'].widget = forms.TextInput(attrs={'class': 'input-single','placeholder':'username'})
         self.fields['username'].label = ''
 
-        self.fields['password1'].widget = forms.PasswordInput(attrs={'class': 'input-signup','placeholder':'Password1'})
+        self.fields['password1'].widget = forms.PasswordInput(attrs={'class': 'input-single','placeholder':'Password1'})
         self.fields['password1'].label = ''
 
-        self.fields['password2'].widget = forms.PasswordInput(attrs={'class': 'input-signup','placeholder':'Password2'})
+        self.fields['password2'].widget = forms.PasswordInput(attrs={'class': 'input-single','placeholder':'Password2'})
         self.fields['password2'].label = ''
 
     def save(self, request):

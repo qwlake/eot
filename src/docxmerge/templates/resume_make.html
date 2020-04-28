@@ -11,7 +11,7 @@
     <script type="text/javascript">
         var frm = $('#submit-form');
         $(document).on('click', '#submit-btn', function() {
-            $('.resumeDiv').hide();
+            $('.resume-div').hide();
             $('.loading').show();
             $.ajax({
                 type: frm.attr('method'),
@@ -31,39 +31,25 @@
         
     <script>
         $(document).ready(function(){
-            $('#resumeTitle').addClass('resumeTitleClass');
+            $('.page-title').addClass('title-trans');
         })
     </script>
 </head>
 <body>
-<div class="resumeDiv">
-    <h2 id="resumeTitle">정보입력</h2>
-    <!-- <form method="POST" action="{% url 'docxmerge:make' %}">
-        {% csrf_token %}
-        이름:
-        <input name="writer_name" type="text">
+    <div class="resume-div">
+        <strong class="page-title">정보입력</strong>
+        <form id="submit-form" method="POST" action="{% url 'docxmerge:make' %}">
+            <table id="form-table">
+                {% csrf_token %}
+                {{ form.as_p }}
+                <br>
+            </table>
+            <button class="btn btn-light-custom" id="submit-btn" type="submit">제출</button>
+        </form>
         <br>
-        주소:
-        <input name="writer_address" type="text">
-        <br>
-        전화번호:
-        <input name="writer_phone" type="tel">
-        <br>
-        이메일:
-        <input name="writer_email" type="email">
-        <br><br>
-        <input type="submit" class="btn btn-light" value="make resume">
-    </form> -->
-    <!-- form안에 있는 class 이름들은 forms.py에 코드로 들어가 있습니다!! -->
-    <form id="submit-form" method="POST" action="{% url 'docxmerge:make' %}">
-        {% csrf_token %}
-        <table id="form-table">
-                {{ form.as_table }}
-        </table>
-        <input id="submit-btn" type="submit" class="btn btn-light">
-    </form>
-</div>
-<div class="container loading"></div>
+        <hr class="line">
+    </div>
+    <div class="container loading"></div>
 </body>
 </html>
 {% endblock %}

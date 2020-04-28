@@ -13,50 +13,31 @@
     <title>이옷 | Login</title>
     <script>
         $(document).ready(function(){
-            $('#login-page').addClass('loginTitleClass');
+            $('.page-title').addClass('title-trans');
         })
     </script>
 </head>
 <body>
-<link rel='stylesheet' type='text/css' href="{% static 'users/account/css/login.css' %}?ver=1">
-
-<a id="login-page" href="{{ account_login }}"><strong>로그인</strong></a>
-<center>
-    <div class ="login-box">
-      <br><br>
-        <form method="POST" action="{% url 'account_login' %}">
-            {% csrf_token %}
-            {{ form.as_p }}
-                <!-- <table>
-                    <tr>
-                        <td>
-                            <input class="input-login" name="login" type="email" placeholder="Email address" >
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>
-                            <input class="input-login" name="password" type="password" placeholder="Password">
-                        </td>
-                    </tr>
-                <br><br>
-                
-                </table> -->
+    <strong class="page-title">로그인</strong>
+    <center>
+        <div class ="input-form-box">
+            <form method="POST" action="{% url 'account_login' %}">
+                {% csrf_token %}
+                {{ form.as_p }}
                 {% if redirect_field_value %}
                 <input type="hidden" name="{{ redirect_field_name }}" value="{{ redirect_field_value }}" />
                 {% endif %}
                 <br>
-                <button  class="btn btn-light"  type="submit">로그인</button>
+                <button class="btn btn-light-custom"  type="submit">로그인</button>
             </form>
-
-        <br>
-        <hr class="line">
-        <p class ="go-signup">
-            <div class ="go-signup"><a class ="go-signup" href="{% provider_login_url 'google' %}">구글 로그인</a></div>
-            <div class ="go-signup"><a class ="go-signup" href="{% url 'users:account_signup' %}">Don't have an account?</a></div>
-        </p>
-        <br>
-    </div>
-{% comment %} </div> {% endcomment %}
+            <br>
+            <hr class="line">
+            <p class ="go-signup">
+                <h6><a class="link" href="{% provider_login_url 'google' %}">구글 로그인</a></h6>
+                <h6><a class="link" href="{% url 'users:account_signup' %}">회원가입</a></h6>
+            </p>
+            <br>
+        </div>
     </center>
 </body>
 </html>

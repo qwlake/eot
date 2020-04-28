@@ -1,0 +1,20 @@
+.out-div {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 0fr));
+    justify-content: space-around;
+    height: 100%;
+}
+
+.flex-item {
+    padding: 30px 30px 30px 30px;
+    border: 1px solid black;
+    border-radius: 4px;
+    width: 300px !important;
+    margin-bottom: 20px;
+}
+
+.btn-write {
+    display: block;
+    margin-top: 36px;
+    margin-bottom: 36px;
+}
