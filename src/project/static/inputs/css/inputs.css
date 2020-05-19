@@ -15,7 +15,7 @@ body{
 .input-form-box{
     /* background-color:  #53BFAC; */
     height: 600px;
-    width: 500px;
+    width: 100%;
     border: none;
     border-radius: 10px;
     padding: 20px; 
@@ -26,7 +26,8 @@ body{
 
 .input-single{
     height: 50px;
-    width: 440px;  
+    width: 80%;
+    max-width: 440px;
     font-family: 'Noto Sans KR';
     font-size: 10pt;
     padding-left: 15px;

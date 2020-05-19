@@ -8,9 +8,9 @@
 '''
 def requests(date, info):
     dic = {
-        '{{.*'+key+'.*}}':val.value() for key, val in zip(info.fields.keys(), info)
+        '{{'+key+'}}':val.value() for key, val in zip(info.fields.keys(), info)
     }
-    dic['{{.*date.*}}'] = date
+    dic['{{date}}'] = date
     return dic
 
 # AES-256 secret key
