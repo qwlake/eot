@@ -11,38 +11,6 @@ from pdf2image import convert_from_path
 from .models import Resume, ResumeMerged
 from . import resume_config
 
-def upload_preprocessing(test):
-    # # 병합될 파일
-    # new_docx = zipfile.ZipFile(test, 'a')
-
-    # # docx 파일 템플릿
-    # template_docx = zipfile.ZipFile(test)
-
-    # # 템플릿 파일을 xml 포맷으로 압축 해제
-    # with open(template_docx.extract("word/document.xml"), encoding='UTF8') as temp_xml_file:
-    #     temp_xml_str = temp_xml_file.read()
-
-    # # # 템플릿의 변수들을 user의 정보로 교체
-    # # for key in replace_text.keys():
-    # #     temp_xml_str = temp_xml_str.replace(str(key), str(replace_text.get(key)))
-
-    # re.replace()
-
-    # # 병합된 정보를 xml 파일로 임시 저장
-    # with open("word/temp.xml", "w+", encoding='UTF8') as temp_xml_file:
-    #     temp_xml_file.write(temp_xml_str)
-
-    # # 임시저장된 병합정보를 파일에 쓰기
-    # for f in template_docx.filelist:
-    #     if not f.filename == "word/document.xml":
-    #         new_docx.writestr(f.filename, template_docx.read(f))
-    # new_docx.write("word/temp.xml", "word/document.xml")
-    # template_docx.close()
-    # new_docx.close()
-
-
-    return test
-
 def docx_to_pdf(source, timeout=None):
     class _LibreOfficeError(Exception):
         def __init__(self, output):
@@ -70,12 +38,20 @@ def pdf_to_img(z):
     for page in pages:
         page.save(img_path_name, 'PNG')
 
+# ex {{date}}
+def requests(date, info):
+    dic = {
+        '{{'+key+'}}':val.value() for key, val in zip(info.fields.keys(), info)
+    }
+    dic['{{date}}'] = date
+    return dic
+
 def merge(info, resume_info):
 
     class AESCipher():
     
         def __init__(self):
-            key = resume_config.SECRET_KEY[:32] # AES-256
+            key = settings.MERGE_SECRET_KEY[:32] # AES-256
             self.bs = 32
             self.key = hashlib.sha256(AESCipher.str_to_bytes(key)).digest()
 
@@ -107,7 +83,7 @@ def merge(info, resume_info):
 
     aes = AESCipher()
     date = datetime.now().strftime("%Y. %m. %d.")
-    replace_text = resume_config.requests(date, info)
+    replace_text = requests(date, info)
 
     try:
         # 작업 실행 시간
@@ -175,8 +151,7 @@ def merge(info, resume_info):
 
             # 템플릿의 변수들을 user의 정보로 교체
             for key in replace_text.keys():
-                # temp_xml_str = temp_xml_str.replace(str(key), str(replace_text.get(key)))
-                temp_xml_str = re.sub(str(key), str(replace_text.get(key)), temp_xml_str, 1)
+                temp_xml_str = temp_xml_str.replace(str(key), str(replace_text.get(key)))
 
             # 병합된 정보를 xml 파일로 임시 저장
             with open("word/temp.xml", "w+", encoding='UTF8') as temp_xml_file:
@@ -191,24 +166,6 @@ def merge(info, resume_info):
             new_docx.close()
         print("Merge complete", datetime.now() - starttime)
         print("-----------------------------Merge complete------------------------------------")
-
-        # # convert docx to pdf with thread
-        # starttime = datetime.now()
-        # threads = []
-        # for new_path_name in new_path_name_list:
-        #     t = Thread(target=docx_to_pdf, args=(new_path_name,))
-        #     threads.append(t)
-        # for t in threads:
-        #     t.start()
-        # for t in threads:
-        #     t.join()
-        # print("pdf convert end", datetime.now() - starttime)
-
-        # # convert docx to pdf with multiprocessing
-        # starttime = datetime.now()
-        # pool = Pool()
-        # pool.map(docx_to_pdf, new_path_name_list)
-        # print("pdf convert end", datetime.now() - starttime)
 
         # convert docx to pdf with non-thread
         starttime = datetime.now()

@@ -9,7 +9,7 @@ from django.views.decorators.http import require_POST
 from wsgiref.util import FileWrapper
 from .models import Resume, ResumeInfo, ResumeMerged
 from .forms import ResumeInfoForm, UploadFileForm
-from .resume_module import merge, upload_preprocessing
+from .resume_module import merge
 from users.models import User
 from users.views import coin_add
 from users.views import coin_sub
@@ -80,7 +80,7 @@ def resume_upload(request):
         form = UploadFileForm(request.POST, request.FILES)
         if form.is_valid():
             resume_name = form.cleaned_data['resume_name']
-            resume_file = upload_preprocessing(form.cleaned_data['file'])
+            resume_file = form.cleaned_data['file']
             resume_coin = form.cleaned_data['coin']
             instance = Resume(
                 resume_name=resume_name, 
