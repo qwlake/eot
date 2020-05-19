@@ -13,6 +13,7 @@ from .resume_module import merge
 from users.models import User
 from users.views import coin_add
 from users.views import coin_sub
+
 def resume_make(request):
     if request.user.is_authenticated:
         if request.method == 'POST':
@@ -78,7 +79,13 @@ def resume_upload(request):
     if request.method == 'POST':
         form = UploadFileForm(request.POST, request.FILES)
         if form.is_valid():
-            instance = Resume(resume_name=form.cleaned_data['resume_name'], file=form.cleaned_data['file'], coin=form.cleaned_data['coin'])
+            resume_name = form.cleaned_data['resume_name']
+            resume_file = form.cleaned_data['file']
+            resume_coin = form.cleaned_data['coin']
+            instance = Resume(
+                resume_name=resume_name, 
+                file=resume_file, 
+                coin=resume_coin)
             instance.save()
             return redirect(reverse('index'))
     else:
