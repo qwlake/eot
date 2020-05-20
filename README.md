@@ -7,7 +7,7 @@
 Docker 배포에 관한 자세한 가이드 정리: <br>
 [윈도우 장고(Django) 프로젝트 AWS(Ubuntu)에 배포하기 (+gunicorn,Nginx,PostgreSQL,Docker,Docker-compose)](https://newprog.blog.me/221854045564)
 
-![index1](./READMEMD-img/eot-index.jpg)
+![image](https://user-images.githubusercontent.com/41278416/82416379-e41b3300-9ab4-11ea-932e-7f7804bb92a8.png)
 
 ## Environment:
 
