@@ -34,9 +34,11 @@ SECRET_KEY = get_secret('DJANGO_SECRET_KEY')
 MERGE_SECRET_KEY = get_secret('MERGE_SECRET_KEY')
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
-ALLOWED_HOSTS = ['*']
+ALLOWED_HOSTS = [
+    'resume-make.shop',
+]
 
 
 # Application definition

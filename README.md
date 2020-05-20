@@ -2,50 +2,49 @@
 
 멋쟁이 사자처럼 7기 중앙 해커톤
 
-서비스명 : 이옷 (이력서 옷입히기)
-<br>
+서비스명: 이옷 (이력서 옷입히기)<br>
+사이트 주소: http://resume-make.shop/<br>
+Docker 배포에 관한 자세한 가이드 정리: <br>
+[윈도우 장고(Django) 프로젝트 AWS(Ubuntu)에 배포하기 (+gunicorn,Nginx,PostgreSQL,Docker,Docker-compose)](https://newprog.blog.me/221854045564)
+
 ![index1](./READMEMD-img/eot-index.jpg)
 
 ## Environment:
 
 ```
-win10 64bit
+Ubuntu 18.04
 python 3.7.6
-Django 2.2.2
+Django 2.2.3
+gunicorn 20.0.4
+psycopg2 2.8.4
+nginx latest ver.
+postgres latest ver.
 ```
 
 
-## Quitck start:
+## Quitck start
 
-```python
-pip install -r requirements.txt
-python manage.py makemigrations
-python manage.py migrate
-python manage.py collectstatic
+먼저 `Docker`와 `docker-compose`의 설치가 필요하다.
+
+* Windows
+
+설치 링크: [Docker Desktop for Windows](https://hub.docker.com/editions/community/docker-ce-desktop-windows)
+
+* Ubuntu
+
+```
+sudo apt-get install docker docker-compose
 ```
 
+설치 후 `docker-compose.yml` 파일이 있는 위치로 이동해 아래 명령어로 빌드와 동시에 실행
+
+```
+docker-compose up --build
+```
+
+#### Note
 * 사이트를 사용하기 위해서는 관리자로 로그인 한 후에 `이력서 템플릿 업로드` 버튼을 통해 템플릿을 업로드 하여야 한다. 이력서 템플릿 샘플 양식 : https://drive.google.com/open?id=1xBq-Ji-HjcOYOY61SFWuUuQKj0p_mdoK
-* PDF to Image 기능을 사용하기 위해서는 다음의 작업을 해야한다.
-```
-http://blog.alivate.com.au/wp-content/uploads/2018/10/poppler-0.68.0_x86.7z
-1. 위 링크에서 압축 파일 다운 후 `C:\Program Files`에 압축 해제
-2. `C:\Program Files\poppler-0.68.0\bin`를 `환경 변수`의 `Path`에 추가
-3. 재부팅
-```
 
-
-#### Errors
-에러 메세지:
-```
-...
-import win32api, sys, os
-ImportError: DLL load failed: 지정된 프로시저를 찾을 수 없습니다.
-```
-조치 방법:
-```
-pip uninstall pypiwin32 pywin32
-pip install pywin32
-```
 
 
 ## Apps informations
@@ -60,7 +59,7 @@ docxmerge : 이력서 템플릿과 사용자 정보를 합쳐서 보여주는 Ap
 
  
 
-## Others
+## Apps other informations
 
 `media/resume_templates` : 이력서 템플릿이 들어 있는 폴더
 
