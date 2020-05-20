@@ -31,7 +31,10 @@
 .loading {
     display: none;
     background-image: url("../images/resume_loading.gif");
-    width: 100%;
+    background-repeat: no-repeat;
+    background-size: contain;
+    width: 90%;
+    padding-bottom: 100%;
 	max-width: 500px;
-    margin-top: 125px;
+    margin-top: 1rem;
 }
