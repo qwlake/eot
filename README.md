@@ -7,7 +7,9 @@
 Docker 배포에 관한 자세한 가이드 정리: <br>
 [윈도우 장고(Django) 프로젝트 AWS(Ubuntu)에 배포하기 (+gunicorn,Nginx,PostgreSQL,Docker,Docker-compose)](https://newprog.blog.me/221854045564)
 
-![index1](./READMEMD-img/eot-index.jpg)
+![image](https://user-images.githubusercontent.com/41278416/82416379-e41b3300-9ab4-11ea-932e-7f7804bb92a8.png)
+
+![usage](https://user-images.githubusercontent.com/41278416/82436783-57cb3900-9ad1-11ea-8519-375dc5ffdfe1.gif)
 
 ## Environment:
 
@@ -17,8 +19,8 @@ python 3.7.6
 Django 2.2.3
 gunicorn 20.0.4
 psycopg2 2.8.4
-nginx latest ver.
-postgres latest ver.
+nginx latest 1.17.10
+postgres latest 12.2
 ```
 
 
