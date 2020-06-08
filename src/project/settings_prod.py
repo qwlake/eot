@@ -96,7 +96,7 @@ TEMPLATES = [
     },
 ]
 
-WSGI_APPLICATION = 'project.wsgi.application'
+WSGI_APPLICATION = 'project.prod.wsgi.application'
 
 
 # Database
@@ -153,15 +153,10 @@ USE_TZ = True
 STATIC_URL = '/static/'
 MEDIA_URL = '/media/'
 
-STATICFILES_DIRS = [
-    os.path.join(BASE_DIR, 'project', 'static'),
-    os.path.join(BASE_DIR, 'indexapp', 'static'),
-]
-
 STATIC_ROOT = os.path.join(BASE_DIR, '.static_root')
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
-# # Register stuff
+# Register stuff
 LOGIN_URL = 'login'
 LOGIN_REDIRECT_URL = 'index'
 LOGOUT_REDIRECT_URL = 'index'

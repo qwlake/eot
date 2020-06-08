@@ -14,9 +14,11 @@ ENV PYTHONIOENCODING=utf-8
 RUN pip3 install --upgrade pip
 RUN pip3 install --upgrade setuptools
 
-# python에서 필요한 패키지 설치
+# 실행 환경 구축
 RUN mkdir /config
 ADD /config/requirements.txt /config/
 RUN pip3 install -r /config/requirements.txt
+
+# 작업 디렉토리
 RUN mkdir /src;
 WORKDIR /src
