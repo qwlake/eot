@@ -15,10 +15,10 @@ services:
         build: .
         container_name: dg01
         command: bash -c "
-            python3 manage_dev.py collectstatic --no-input &&
-            python3 manage_dev.py makemigrations && 
-            python3 manage_dev.py migrate && 
-            gunicorn project.dev.wsgi:application -b 0:80"
+            python3 manage_prod.py collectstatic --no-input &&
+            python3 manage_prod.py makemigrations && 
+            python3 manage_prod.py migrate && 
+            gunicorn project.prod.wsgi:application -b 0:80"
         depends_on:
             - db
         volumes:

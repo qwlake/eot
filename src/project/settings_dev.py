@@ -34,10 +34,10 @@ SECRET_KEY = get_secret('DJANGO_SECRET_KEY')
 MERGE_SECRET_KEY = get_secret('MERGE_SECRET_KEY')
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False
+DEBUG = True
 
 ALLOWED_HOSTS = [
-    'resume-make.shop',
+    '*',
 ]
 
 
@@ -50,6 +50,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'project',
     'indexapp',
     'docxmerge',
     'authtools',
@@ -96,7 +97,7 @@ TEMPLATES = [
     },
 ]
 
-WSGI_APPLICATION = 'project.wsgi.application'
+WSGI_APPLICATION = 'project.dev.wsgi.application'
 
 
 # Database
@@ -153,15 +154,10 @@ USE_TZ = True
 STATIC_URL = '/static/'
 MEDIA_URL = '/media/'
 
-STATICFILES_DIRS = [
-    os.path.join(BASE_DIR, 'project', 'static'),
-    os.path.join(BASE_DIR, 'indexapp', 'static'),
-]
-
 STATIC_ROOT = os.path.join(BASE_DIR, '.static_root')
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
-# # Register stuff
+# Register stuff
 LOGIN_URL = 'login'
 LOGIN_REDIRECT_URL = 'index'
 LOGOUT_REDIRECT_URL = 'index'
