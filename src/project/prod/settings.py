@@ -1,6 +1,6 @@
 # settings_dev.py 로부터 재정의
 
-from project.settings_dev import *
+from project.dev.settings import *
 
 DEBUG = False
 
