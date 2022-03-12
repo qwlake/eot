@@ -4,7 +4,7 @@ django-authtools==1.7.0
 gunicorn==20.0.4
 oauthlib==3.0.2
 pdf2image==1.12.1
-Pillow==8.1.1
+Pillow==9.0.1
 psycopg2==2.8.4
 pycryptodome==3.8.2
 requests==2.22.0
